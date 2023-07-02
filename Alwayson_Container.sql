@@ -1,5 +1,4 @@
 :DOCKER SERVER
-  
 --Criar 3 containers com SQL
 sudo docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Senha123" -p 1433:1433 -p 15022:5022 --name SQL2022_01 --hostname SQL2022_01 -e "MSSQL_AGENT_ENABLED=True" -d mcr.microsoft.com/mssql/server:2022-latest
 sudo docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Senha123" -p 1434:1433 -p 15023:5022 --name SQL2022_02 --hostname SQL2022_02 -e "MSSQL_AGENT_ENABLED=True" -d mcr.microsoft.com/mssql/server:2022-latest
@@ -169,10 +168,3 @@ BACKUP DATABASE [DBA] TO DISK = N'var/opt/mssql/data/DBA.bak';
 
 
 ALTER AVAILABILITY GROUP [AG_LNX] ADD DATABASE [DBA]; 
-
-
-
-
-
-
-
