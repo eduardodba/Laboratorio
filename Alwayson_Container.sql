@@ -72,15 +72,12 @@ WITH PRIVATE KEY ( FILE = '/var/opt/mssql/data/dbm_certificate.pvk', ENCRYPTION 
 
 :DOCKER SERVER
 --Copiar certificado e chave para todos os demais nodes
---Localizar o certificado e a master key
-find / -name dbm_certificate.*
+--Rode o comando abaixo para identificar o diretório do node que foi criado os arquivos
+docker inspect $(docker ps -qa) |  jq -r 'map([.Name, .GraphDriver.Data.MergedDir]) | .[] | "\(.[0])\t\(.[1])"'
 
---Pegar o comando acima e copiar para os demais containers
---Como saber o caminho dos outros containers???
---Busque por master.mdf
-find / -name master.mdf
-
+--Peguei o comando da Origem e destino e mova
 --Execute os comandos com base no retorno dos seus dados
+--/var/lib/docker/overlay2/ID/merged/var/opt/mssql/data/	
 cp /var/lib/docker/overlay2/d64a064814bf52ac6cd5ac7b7d68eb35936399eb6b71ba8e7b28c2a5db74e656/merged/var/opt/mssql/data/SQL2022_01_Cert.* /var/lib/docker/overlay2/51ee0e42ea86fa9a2b5c5e190fafade8b33072fdca36a5e2323cccad0addbb87/merged/var/opt/mssql/data/
 cp /var/lib/docker/overlay2/51ee0e42ea86fa9a2b5c5e190fafade8b33072fdca36a5e2323cccad0addbb87/merged/var/opt/mssql/data/SQL2022_02_Cert.* /var/lib/docker/overlay2/d64a064814bf52ac6cd5ac7b7d68eb35936399eb6b71ba8e7b28c2a5db74e656/merged/var/opt/mssql/data/
 
