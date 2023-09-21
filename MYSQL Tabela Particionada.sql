@@ -1,4 +1,4 @@
-#Tabela Particionada por mês
+--Tabela Particionada por mês
 DROP TABLE IF EXISTS TESTE_PARTICIONADA;
 CREATE TABLE `TESTE_PARTICIONADA` (
   `id` int DEFAULT NULL,
@@ -20,7 +20,7 @@ PARTITION BY RANGE (extract(month from `Date`))
  PARTITION P12 VALUES LESS THAN MAXVALUE ENGINE = InnoDB)
 
 
-#Procedure para carregar registros na tabela
+--Procedure para carregar registros na tabela
 DROP PROCEDURE IF EXISTS insertRowsTESTE_PARTICIONADA;
 DELIMITER //  
 CREATE PROCEDURE insertRowsTESTE_PARTICIONADA()   
@@ -38,7 +38,7 @@ CALL insertRowsTESTE_PARTICIONADA();
 
 
 
-#Listar Partições e quantidade de linhas em cada
+--Listar Partições e quantidade de linhas em cada
 SELECT 	TABLE_NAME, 
 		PARTITION_NAME, 
         PARTITION_DESCRIPTION, 
@@ -49,10 +49,10 @@ WHERE 	TABLE_SCHEMA='DBA' AND
     PARTITION_NAME IS NOT NULL
 
 
-#Select em determinada partiçao
+--Select em determinada partiçao
 SELECT * FROM TESTE_PARTICIONADA PARTITION (P12);
 
 
-#Truncar determinada partição
+--Truncar determinada partição
 ALTER TABLE TESTE_PARTICIONADA TRUNCATE PARTITION P12;
 
