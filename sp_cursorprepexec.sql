@@ -2,7 +2,7 @@ jdbc:sqlserver://XPTO:1433;sslProtocol=TLS;jaasConfigurationName=SQLJDBCDriver;s
 selectMethod=cursor, esta configuração era para estar assim selectMethod=direct
 
 o transacional está usando driver diferente e está correto (a sintaxe é diferente para desabilitar):
-WE	jdbc:jtds:sqlserver://PANFDBP432D/AGENCIAW;useCursors=false;sendStringParametersAsUnicode=false;wsid=ABEBWS_WE
+WE	jdbc:jtds:sqlserver://XPTO/BASE;useCursors=false;sendStringParametersAsUnicode=false;wsid=ABEBWS_WE
 
 
 
