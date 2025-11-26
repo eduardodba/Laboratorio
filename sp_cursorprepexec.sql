@@ -35,5 +35,41 @@ EXEC sp_cursorprepexec
  
 SELECT @p1 AS Handle, @p2 AS PrepStatus, @p7 AS ExecStatus;
 
+
 exec dbo.P_CONS_CONTAS_TITULAR_CNPJCPF '07563244590'
  
+
+
+
+SELECT 
+    r.session_id,
+    r.granted_query_memory * 8 AS memory_kb,
+    c.cursor_id,
+    c.name,
+    c.properties,
+    t.text
+FROM sys.dm_exec_requests r
+JOIN sys.dm_exec_cursors(0) c ON r.session_id = c.session_id
+CROSS APPLY sys.dm_exec_sql_text(c.sql_handle) t;
+
+
+
+SELECT 
+    type,
+    CAST(SUM(pages_in_bytes) / (1024.0 * 1024.0) AS INT) AS total_memory_MB
+FROM sys.dm_os_memory_objects
+WHERE type = 'MEMOBJ_CURSOREXEC'
+GROUP BY type
+ORDER BY total_memory_MB DESC;
+
+
+
+SELECT cntr_value as Mem_KB, 
+        cntr_value/1024.0 as Mem_MB,
+         (cntr_value/1048576.0) as Mem_GB 
+FROM sys.dm_os_performance_counters
+WHERE counter_name = 'Cursor memory usage' and instance_name = '_Total'
+
+
+
+
